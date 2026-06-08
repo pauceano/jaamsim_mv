@@ -25,7 +25,7 @@
  - method main() removed
  - minor warnings corrected
  */
-package com.jaamsim.ui;
+package com.jaamsim.math;
 
 import java.util.Comparator;
 

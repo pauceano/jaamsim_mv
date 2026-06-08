@@ -24,13 +24,13 @@ import java.util.LinkedHashMap;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.Commands.KeywordCommand;
-import com.jaamsim.DisplayModels.ColladaModel;
-import com.jaamsim.DisplayModels.DisplayModel;
-import com.jaamsim.DisplayModels.IconModel;
-import com.jaamsim.DisplayModels.ImageModel;
-import com.jaamsim.DisplayModels.PolylineModel;
-import com.jaamsim.DisplayModels.ShapeModel;
-import com.jaamsim.DisplayModels.TextModel;
+import com.jaamsim.render.ColladaModel;
+import com.jaamsim.render.DisplayModel;
+import com.jaamsim.render.IconModel;
+import com.jaamsim.render.ImageModel;
+import com.jaamsim.render.PolylineModel;
+import com.jaamsim.render.ShapeModel;
+import com.jaamsim.render.TextModel;
 import com.jaamsim.SubModels.CompoundEntity;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.basicsim.ErrorException;
@@ -59,10 +59,10 @@ import com.jaamsim.math.Quaternion;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.VisibilityInfo;
-import com.jaamsim.ui.DragAndDropable;
-import com.jaamsim.ui.FrameBox;
+import com.jaamsim.math.MathUtils;
+import com.jaamsim.math.VisibilityInfo;
+import com.jaamsim.basicsim.DragAndDropable;
+
 import com.jaamsim.units.AngleUnit;
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.DistanceUnit;
@@ -399,7 +399,17 @@ public class DisplayEntity extends Entity implements DragAndDropable {
 		if (minDist == 0.0) {
 			minDist = Double.NEGATIVE_INFINITY;
 		}
-		visInfo = new VisibilityInfo(visibleViews.getValue(), minDist, maxDist);
+		ArrayList<View> views = visibleViews.getValue();
+		int[] viewIDs;
+		if (views == null || views.isEmpty()) {
+			viewIDs = null;
+		}
+		else {
+			viewIDs = new int[views.size()];
+			for (int i = 0; i < views.size(); i++)
+				viewIDs[i] = views.get(i).getID();
+		}
+		visInfo = new VisibilityInfo(viewIDs, minDist, maxDist);
 	}
 
 	@Override
@@ -958,7 +968,7 @@ public class DisplayEntity extends Entity implements DragAndDropable {
 	 * Returns the inverse global transform with scale factor all rolled into a Matrix4d
 	 */
 	public Mat4d getInvTransMatrix() {
-		return RenderUtils.getInverseWithScale(getGlobalTrans(), size);
+		return MathUtils.getInverseWithScale(getGlobalTrans(), size);
 	}
 
 	/**
@@ -1240,7 +1250,7 @@ public class DisplayEntity extends Entity implements DragAndDropable {
 				return;
 			try {
 				gui.deleteEntity(this);
-				FrameBox.setSelectedEntity(null, false);
+				gui.setSelectedEntity(null, false);
 			}
 			catch (ErrorException e) {
 				gui.invokeErrorDialogBox("User Error", e.getMessage());

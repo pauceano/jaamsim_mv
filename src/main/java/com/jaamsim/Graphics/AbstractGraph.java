@@ -19,7 +19,7 @@ package com.jaamsim.Graphics;
 
 import java.util.ArrayList;
 
-import com.jaamsim.DisplayModels.GraphModel;
+import com.jaamsim.render.GraphModel;
 import com.jaamsim.Samples.SampleProvider;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.datatypes.DoubleVector;

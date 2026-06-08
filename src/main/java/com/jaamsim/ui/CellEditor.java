@@ -150,7 +150,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 		jPanel.getActionMap().put("copy", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIFrame.copyToClipboard(text.getText());
+				GUIFrame.getInstance().copyToClipboard(text.getText());
 			}
 		});
 
@@ -159,7 +159,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 		jPanel.getActionMap().put("paste", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String str = GUIFrame.getStringFromClipboard();
+				String str = GUIFrame.getInstance().getStringFromClipboard();
 				if (str == null)
 					return;
 				text.setText(str);
@@ -172,7 +172,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 		jPanel.getActionMap().put("cut", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIFrame.copyToClipboard(text.getText());
+				GUIFrame.getInstance().copyToClipboard(text.getText());
 				text.setText("");
 				fireEditingStopped();
 			}
@@ -310,7 +310,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 			cutMenuItem.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed( ActionEvent event ) {
-					GUIFrame.copyToClipboard(str);
+					GUIFrame.getInstance().copyToClipboard(str);
 					text.setText("");
 					fireEditingStopped();
 				}
@@ -326,7 +326,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 			copyMenuItem.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed( ActionEvent event ) {
-					GUIFrame.copyToClipboard(str);
+					GUIFrame.getInstance().copyToClipboard(str);
 				}
 			} );
 			menu.add(copyMenuItem);
@@ -340,7 +340,7 @@ public abstract class CellEditor extends AbstractCellEditor implements TableCell
 			pasteMenuItem.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed( ActionEvent event ) {
-					String str = GUIFrame.getStringFromClipboard();
+					String str = GUIFrame.getInstance().getStringFromClipboard();
 					if (str == null)
 						return;
 					text.setText(str);

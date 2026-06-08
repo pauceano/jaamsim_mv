@@ -282,7 +282,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void mouseClicked(int windowID, int x, int y, int button, int modifiers, short count) {
-		if (!RenderManager.isGood()) { return; }
+		if (!RenderManager.isReady()) { return; }
 
 		RenderManager.inst().hideExistingPopups();
 
@@ -303,7 +303,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void mouseMoved(int windowID, int x, int y) {
-		if (!RenderManager.isGood()) { return; }
+		if (!RenderManager.isReady()) { return; }
 		RenderManager.redraw();
 
 		RenderManager.inst().mouseMoved(windowID, x, y);
@@ -315,7 +315,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void mouseEntry(int windowID, int x, int y, boolean isInWindow) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		RenderManager.redraw();
 		RenderManager.inst().mouseEntry(windowID, x, y, isInWindow);
@@ -366,7 +366,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void windowClosing() {
-		if (!RenderManager.isGood()) { return; }
+		if (!RenderManager.isReady()) { return; }
 
 		RenderManager.inst().hideExistingPopups();
 		RenderManager.inst().windowClosed(_windowID);
@@ -374,7 +374,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void mouseButtonDown(int windowID, int x, int y, int button, boolean isDown, int modifiers) {
-		if (!RenderManager.isGood()) { return; }
+		if (!RenderManager.isReady()) { return; }
 
 		// If the left mouse button is released, set the point of interest for zooming and rotating
 		// Sets the POI when an object is either selected or dragged
@@ -394,7 +394,7 @@ public class CameraControl implements WindowInteractionListener {
 
 	@Override
 	public void windowGainedFocus() {
-		if (!RenderManager.isGood()) { return; }
+		if (!RenderManager.isReady()) { return; }
 
 		RenderManager.inst().setActiveWindow(_windowID);
 	}

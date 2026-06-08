@@ -20,7 +20,7 @@ package com.jaamsim.basicsim;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.jaamsim.DisplayModels.DisplayModel;
+import com.jaamsim.render.DisplayModel;
 import com.jaamsim.input.BooleanInput;
 import com.jaamsim.input.ClassInput;
 import com.jaamsim.input.EntityInput;
@@ -31,7 +31,7 @@ import com.jaamsim.input.Keyword;
 import com.jaamsim.input.StringInput;
 import com.jaamsim.input.Vec3dInput;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.ui.DragAndDropable;
+import com.jaamsim.basicsim.DragAndDropable;
 import com.jaamsim.units.DistanceUnit;
 
 public class ObjectType extends Entity implements DragAndDropable {

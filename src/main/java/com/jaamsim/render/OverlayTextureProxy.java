@@ -19,6 +19,7 @@ package com.jaamsim.render;
 
 import java.net.URI;
 import java.util.ArrayList;
+import com.jaamsim.math.VisibilityInfo;
 
 public class OverlayTextureProxy implements RenderProxy {
 

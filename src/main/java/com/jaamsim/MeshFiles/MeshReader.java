@@ -35,7 +35,7 @@ import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
 import com.jaamsim.render.Action;
 import com.jaamsim.render.Armature;
-import com.jaamsim.render.RenderException;
+import com.jaamsim.basicsim.RenderException;
 import com.jaamsim.xml.XmlNode;
 import com.jaamsim.xml.XmlParser;
 

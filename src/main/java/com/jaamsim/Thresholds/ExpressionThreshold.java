@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.basicsim.EntityTarget;
 import com.jaamsim.basicsim.ObserverEntity;

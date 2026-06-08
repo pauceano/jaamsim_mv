@@ -17,12 +17,11 @@
 package com.jaamsim.Commands;
 
 import com.jaamsim.Graphics.View;
+import com.jaamsim.basicsim.GUIListener;
 import com.jaamsim.basicsim.JaamSimModel;
-import com.jaamsim.controllers.RenderManager;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.InputAgent;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.ui.FrameBox;
 import com.jaamsim.units.DistanceUnit;
 
 public class DefineViewCommand implements Command {
@@ -56,8 +55,11 @@ public class DefineViewCommand implements Command {
 		}
 
 		// Display the window
-		RenderManager.inst().createWindow(view);
-		FrameBox.setSelectedEntity(view, false);
+		GUIListener gui = simModel.getGUIListener();
+		if (gui != null) {
+			gui.createWindow(view);
+			gui.setSelectedEntity(view, false);
+		}
 		InputAgent.applyArgs(view, "ShowWindow", "TRUE");
 
 		// Set the camera position

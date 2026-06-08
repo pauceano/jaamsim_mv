@@ -17,7 +17,7 @@
 package com.jaamsim.Graphics;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
-import com.jaamsim.DisplayModels.PolylineModel;
+import com.jaamsim.render.PolylineModel;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.input.Keyword;
 import com.jaamsim.units.DistanceUnit;

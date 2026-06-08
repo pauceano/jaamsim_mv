@@ -349,7 +349,7 @@ public class ExampleBox extends JDialog {
 			}
 
 			// Render the view offscreen
-			if (view == null || !RenderManager.isGood())
+			if (view == null || !RenderManager.isReady())
 				return null;
 			double simTime = 0.0d;
 			CameraInfo camInfo = CameraControl.getCameraInfo(view, simTime);

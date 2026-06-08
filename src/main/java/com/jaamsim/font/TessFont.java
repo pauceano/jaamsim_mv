@@ -35,7 +35,7 @@ import java.util.Vector;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.render.RenderUtils;
 import com.jaamsim.render.Renderer;
-import com.jaamsim.render.TessFontKey;
+import com.jaamsim.math.TessFontKey;
 import com.jogamp.opengl.GL2GL3;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUtessellator;

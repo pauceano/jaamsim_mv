@@ -19,6 +19,7 @@ package com.jaamsim.render;
 
  import java.util.ArrayList;
 
+import com.jaamsim.basicsim.RenderException;
 import com.jaamsim.math.Mat4d;
 
  /**

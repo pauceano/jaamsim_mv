@@ -1,6 +1,6 @@
 /*
  * JaamSim Discrete Event Simulation
- * Copyright (C) 2026 JaamSim Software Inc.
+ * Copyright (C) 2012 Ausenco Engineering Canada Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.Graphics;
+package com.jaamsim.basicsim;
 
-import com.jaamsim.render.IconModel;
-import com.jaamsim.render.ImageModel;
+public class RenderException extends RuntimeException {
 
-/**
- * Displays a two-dimensional picture
- * @author Harry King
- *
- */
-public class Image extends AbstractShape {
+	private static final long serialVersionUID = 1L;
 
-	{
-		displayModelListInput.clearValidClasses();
-		displayModelListInput.addValidClass(ImageModel.class);
-		displayModelListInput.addInvalidClass(IconModel.class);
+	public RenderException(String message) {
+		super(message);
 	}
 
-	public Image() {}
-
-	@Override
-	public boolean canLabel() {
-		return false;
+	public RenderException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
 }

@@ -63,9 +63,11 @@ limitations under the License.
            classpath="${jogl.lib}:${gluegen.lib}">
       <compilerarg value="-Xlint:-serial"/>
     </javac>
+  </target>
 
+  <!-- Java 25 preview features (requires JDK 25+ with preview enabled); opt-in -->
+  <target name="compile-java25" depends="compile">
     <mkdir dir="${class25.dir}"/>
-
     <javac srcdir="${src25.dir}" destdir="${class25.dir}"
            release="25"
            debug="true"
@@ -74,6 +76,7 @@ limitations under the License.
            includeantruntime="false"
            classpath="${jogl.lib}:${gluegen.lib}:${class.dir}">
       <compilerarg value="-Xlint:-serial"/>
+      <compilerarg value="--enable-preview"/>
     </javac>
   </target>
 
@@ -89,7 +92,6 @@ limitations under the License.
       <fileset dir="${class.dir}"/>
       <fileset dir="${res.dir}"/>
       <fileset file="LICENSE"/>
-      <zipfileset prefix="META-INF/versions/25/" dir="${class25.dir}"/>
     </jar>
     <jar jarfile="${jars.dir}/JaamSim${ver}.jar" compress="true">
       <manifest>
@@ -101,7 +103,6 @@ limitations under the License.
       <fileset dir="${class.dir}"/>
       <fileset dir="${res.dir}"/>
       <fileset file="LICENSE"/>
-      <zipfileset prefix="META-INF/versions/25/" dir="${class25.dir}"/>
       <zipfileset src="jar/gluegen-rt.jar"     includes="jogamp/**/*,com/**/*"/>
       <zipfileset src="jar/gluegen-rt-natives-windows-amd64.jar"    includes="natives/**/*"/>
       <zipfileset src="jar/gluegen-rt-natives-linux-amd64.jar"      includes="natives/**/*"/>

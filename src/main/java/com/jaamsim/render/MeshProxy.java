@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class MeshProxy implements RenderProxy {
 

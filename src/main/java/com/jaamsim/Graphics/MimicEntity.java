@@ -18,7 +18,7 @@ package com.jaamsim.Graphics;
 
 import java.util.ArrayList;
 
-import com.jaamsim.DisplayModels.DisplayModel;
+import com.jaamsim.render.DisplayModel;
 import com.jaamsim.EntityProviders.EntityProvInput;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.input.Input;

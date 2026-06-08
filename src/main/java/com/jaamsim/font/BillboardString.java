@@ -30,7 +30,7 @@ import com.jaamsim.render.OverlayRenderable;
 import com.jaamsim.render.RenderUtils;
 import com.jaamsim.render.Renderer;
 import com.jaamsim.render.Shader;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 import com.jogamp.opengl.GL2GL3;
 
 public class BillboardString implements OverlayRenderable {

@@ -18,6 +18,8 @@ package com.jaamsim.render;
 
 import java.util.ArrayList;
 
+import com.jaamsim.basicsim.RenderException;
+
 public class AnimCurve {
 
 	// A holder for collada curve information

@@ -1,6 +1,6 @@
 /*
  * JaamSim Discrete Event Simulation
- * Copyright (C) 2026 JaamSim Software Inc.
+ * Copyright (C) 2018-2026 JaamSim Software Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.Graphics;
+package com.jaamsim.basicsim;
 
-import com.jaamsim.render.IconModel;
-import com.jaamsim.render.ImageModel;
+import java.awt.image.BufferedImage;
 
-/**
- * Displays a two-dimensional picture
- * @author Harry King
- *
- */
-public class Image extends AbstractShape {
+public interface DragAndDropable {
 
-	{
-		displayModelListInput.clearValidClasses();
-		displayModelListInput.addValidClass(ImageModel.class);
-		displayModelListInput.addInvalidClass(IconModel.class);
-	}
+	public Class<? extends Entity> getJavaClass();
 
-	public Image() {}
+	public boolean isDragAndDrop();
 
-	@Override
-	public boolean canLabel() {
-		return false;
-	}
+	public String getLibraryName();
 
+	public BufferedImage getIconImage();
 }

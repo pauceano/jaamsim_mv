@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
@@ -103,3 +103,4 @@ public abstract class AbstractShapeModel extends DisplayModel implements LineEnt
 	}
 
 }
+

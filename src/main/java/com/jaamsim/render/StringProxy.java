@@ -22,7 +22,9 @@ import com.jaamsim.font.TessFont;
 import com.jaamsim.font.TessString;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Mat4d;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.math.Transform;
+import com.jaamsim.math.VisibilityInfo;
 
 /**
  * A Render proxy for TessStrings

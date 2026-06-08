@@ -23,6 +23,7 @@ import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
+import com.jaamsim.math.VisibilityInfo;
 
 /**
  * Wrapper around a Polygon renderable

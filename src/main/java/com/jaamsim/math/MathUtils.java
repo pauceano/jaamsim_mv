@@ -19,8 +19,6 @@ package com.jaamsim.math;
 
 import java.util.List;
 
-import com.jaamsim.render.RenderUtils;
-
 /**
  * Some handy static methods to make life easier else where
  * @author Matt Chudleigh
@@ -297,7 +295,7 @@ public static double collisionDistLines(Mat4d rayMat, Vec4d[] lines, double coll
 	double shortDist = Double.POSITIVE_INFINITY;
 
 	for (int i = 0; i < lines.length; i+=2) {
-		Vec4d nearPoint = RenderUtils.rayClosePoint(rayMat, lines[i], lines[i+1]);
+		Vec4d nearPoint = rayClosePoint(rayMat, lines[i], lines[i+1]);
 
 		Vec4d raySpaceNear = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
 		raySpaceNear.mult4(rayMat, nearPoint);
@@ -349,6 +347,49 @@ public static Plane getMidpointPlane(Vec3d p0, Vec3d p1) {
 	double dist = normal.dot3(mid);
 
 	return new Plane(normal, dist);
+}
+public static Mat4d mergeTransAndScale(Transform trans, Vec3d scale) {
+	Mat4d ret = new Mat4d();
+	trans.getMat4d(ret);
+	ret.scaleCols3(scale);
+	return ret;
+}
+
+public static Mat4d getInverseWithScale(Transform trans, Vec3d scale) {
+	Transform t = new Transform(trans);
+	t.inverse(t);
+	Mat4d ret = new Mat4d();
+	t.getMat4d(ret);
+	Vec3d s = new Vec3d(scale);
+	if (s.x == 0) { s.x = 1; }
+	if (s.y == 0) { s.y = 1; }
+	if (s.z == 0) { s.z = 1; }
+	ret.scaleRows3(new Vec3d(1/s.x, 1/s.y, 1/s.z));
+	return ret;
+}
+
+public static Vec4d rayClosePoint(Mat4d rayMatrix, Vec4d worldA, Vec4d worldB) {
+	Vec4d a = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+	a.mult4(rayMatrix, worldA);
+	Vec4d b = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+	b.mult4(rayMatrix, worldB);
+	Vec4d ab = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+	Vec4d negA = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+	negA.sub3(a);
+	ab.sub3(b, a);
+	double dot = negA.dot2(ab)/ab.magSquare2();
+	if (dot < 0) {
+		return new Vec4d(worldA);
+	} else if (dot >= 1) {
+		return new Vec4d(worldB);
+	} else {
+		Vec4d worldAB = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+		worldAB.sub3(worldB, worldA);
+		Vec4d ret = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
+		ret.scale3(dot, worldAB);
+		ret.add3(worldA);
+		return ret;
+	}
 }
 
 } // class

@@ -354,41 +354,6 @@ static void nioBuffToGL(GL2GL3 gl, Renderer r, int bufferHandle, int itemSize, B
 	}
 
 	/**
-	 * Return a matrix that is the combination of the transform and non-uniform scale
-	 * @param trans
-	 * @param scale
-	 */
-	public static Mat4d mergeTransAndScale(Transform trans, Vec3d scale) {
-		Mat4d ret = new Mat4d();
-		trans.getMat4d(ret);
-		ret.scaleCols3(scale);
-
-		return ret;
-	}
-
-	/**
-	 * Get the inverse (in Matrix4d form) of the combined Transform and non-uniform scale factors
-	 * @param trans
-	 * @param scale
-	 */
-	public static Mat4d getInverseWithScale(Transform trans, Vec3d scale) {
-		Transform t = new Transform(trans);
-		t.inverse(t);
-
-		Mat4d ret = new Mat4d();
-		t.getMat4d(ret);
-		Vec3d s = new Vec3d(scale);
-		// Prevent dividing by zero
-		if (s.x == 0) { s.x = 1; }
-		if (s.y == 0) { s.y = 1; }
-		if (s.z == 0) { s.z = 1; }
-		ret.scaleRows3(new Vec3d(1/s.x, 1/s.y, 1/s.z));
-
-		return ret;
-
-	}
-
-	/**
 	 * Scale an awt BufferedImage to a given resolution
 	 * @param img
 	 * @param newWidth
@@ -405,43 +370,6 @@ static void nioBuffToGL(GL2GL3 gl, Renderer r, int bufferHandle, int itemSize, B
 		   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 		ret = scaleOp.filter(img, ret);
 		return ret;
-	}
-
-	// Get the closest point in a line segment to a ray
-	public static Vec4d rayClosePoint(Mat4d rayMatrix, Vec4d worldA, Vec4d worldB) {
-
-		// Create vectors for a and b in ray space
-		Vec4d a = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
-		a.mult4(rayMatrix, worldA);
-
-		Vec4d b = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
-		b.mult4(rayMatrix, worldB);
-
-		Vec4d ab = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d); // The line A to B
-
-		Vec4d negA = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d); // -1 * A
-		negA.sub3(a);
-
-		ab.sub3(b, a);
-
-		double dot = negA.dot2(ab)/ab.magSquare2();
-		if (dot < 0) {
-			// The closest point is the A point
-			return new Vec4d(worldA);
-		} else if (dot >= 1) {
-			// B is closest
-			return new Vec4d(worldB);
-		} else {
-			// An intermediate point is closest
-			Vec4d worldAB = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
-			worldAB.sub3(worldB, worldA);
-
-			Vec4d ret = new Vec4d(0.0d, 0.0d, 0.0d, 1.0d);
-			ret.scale3(dot, worldAB);
-			ret.add3(worldA);
-
-			return ret;
-		}
 	}
 
 	// Get the angle (in rads) this point is off the ray, this is useful for collision cones

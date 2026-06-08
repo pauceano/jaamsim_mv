@@ -1,6 +1,6 @@
 /*
  * JaamSim Discrete Event Simulation
- * Copyright (C) 2018-2026 JaamSim Software Inc.
+ * Copyright (C) 2018 JaamSim Software Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.ui;
+package com.jaamsim.render;
 
-import java.awt.image.BufferedImage;
+/**
+ * Provides a separate class for the ImageModels used for object icons. It allows the ImageModels
+ * for icons to be separated from those for images imported by the user.
+ * @author Harry King
+ *
+ */
+public class IconModel extends ImageModel {}
 
-import com.jaamsim.basicsim.Entity;
-
-public interface DragAndDropable {
-
-	public Class<? extends Entity> getJavaClass();
-
-	public boolean isDragAndDrop();
-
-	public String getLibraryName();
-
-	public BufferedImage getIconImage();
-}

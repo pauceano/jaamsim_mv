@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import com.jaamsim.events.EventManager;
 import com.jaamsim.input.InputAgent;
 import com.jaamsim.input.InputErrorException;
-import com.jaamsim.ui.GUIFrame;
 
 /**
  * Controls the execution of one or more runs of a given simulation model.
@@ -79,11 +78,14 @@ public class RunManager {
 				}
 				catch (Exception e) {
 					pause();
-					GUIFrame.invokeErrorDialog("Runtime Error",
-							"The following runtime error has occurred while starting the model "
-							+ "on multiple threads:",
-							e.getMessage(),
-							"More information about the error can be found in the Log Viewer.");
+					GUIListener gui = simModel.getGUIListener();
+					if (gui != null) {
+						gui.invokeErrorDialogBox("Runtime Error",
+								"The following runtime error has occurred while starting the model "
+								+ "on multiple threads:",
+								e.getMessage(),
+								"More information about the error can be found in the Log Viewer.");
+					}
 					Log.logException(e);
 					return;
 				}
@@ -147,7 +149,9 @@ public class RunManager {
 
 	public void runEnded(SimRun run) {
 		Simulation simulation = simModel.getSimulation();
-		GUIFrame.updateUI();
+		GUIListener gui = simModel.getGUIListener();
+		if (gui != null)
+			gui.updateAll();
 
 		synchronized (simModel) {
 			// Print the output report
@@ -199,18 +203,19 @@ public class RunManager {
 
 					// Always terminate the run when in batch mode
 					if (simModel.isBatchRun() || simulation.getExitAtStop()) {
-						GUIFrame.shutdown(0);
+						if (gui != null)
+							gui.exitProgram(0);
 					}
 
 					// Are there any runs with errors
 					ArrayList<SimRun> errorRuns = getErrorRuns();
-					if (GUIFrame.getInstance() != null && !errorRuns.isEmpty()) {
+					if (gui != null && !errorRuns.isEmpty()) {
 						StringBuilder sb = new StringBuilder();
 						for (SimRun r : errorRuns) {
 							sb.append(String.format("replication %s of scenario %s%n",
 									r.getReplicationNumber(), r.getScenario().getScenarioNumber()));
 						}
-						GUIFrame.invokeErrorDialog("Runtime Error",
+						gui.invokeErrorDialogBox("Runtime Error",
 								"Runtime errors occured in the following simulation runs:",
 								sb.toString(),
 								"More information can be found in the Log Viewer.");

@@ -49,13 +49,14 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 
-import com.jaamsim.DisplayModels.DisplayModel;
 import com.jaamsim.MeshFiles.MeshData;
+import com.jaamsim.basicsim.RenderException;
 import com.jaamsim.basicsim.Log;
 import com.jaamsim.font.OverlayString;
 import com.jaamsim.font.TessFont;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.math.AABB;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Ray;
 import com.jaamsim.math.Transform;
@@ -2037,3 +2038,4 @@ private static class TransSortable implements Comparable<TransSortable> {
 	@Override
 	public void setUncaughtExceptionHandler(UncaughtExceptionHandler arg0) {}
 }
+

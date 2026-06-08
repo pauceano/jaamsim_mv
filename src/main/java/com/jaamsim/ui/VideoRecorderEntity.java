@@ -214,7 +214,7 @@ public class VideoRecorderEntity extends DisplayEntity {
 		EventManager.killEvent(captureHandle);
 		EventManager.waitSeconds(startTime, PRI_LOW, EVT_LIFO, captureHandle);
 
-		if (!RenderManager.isGood()) {
+		if (!RenderManager.isReady()) {
 			RenderManager.initialize(false);
 		}
 

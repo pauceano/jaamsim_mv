@@ -48,6 +48,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.basicsim.JaamSimModel;
+import com.jaamsim.basicsim.DragAndDropable;
 import com.jaamsim.basicsim.ObjectType;
 import com.jaamsim.controllers.RenderManager;
 
@@ -132,7 +133,7 @@ public class EntityPallet extends FrameBox implements DragGestureListener {
 					if (event.getDragAction() == DnDConstants.ACTION_COPY) {
 						cursor = DragSource.DefaultCopyDrop;
 					}
-					if (RenderManager.isGood()) {
+					if (RenderManager.isReady()) {
 						// The new renderer is initialized
 						event.startDrag(cursor, new TransferableObjectType(type), RenderManager.inst());
 
@@ -247,7 +248,7 @@ public class EntityPallet extends FrameBox implements DragGestureListener {
 			DragAndDropable type = (DragAndDropable)userObj;
 			this.setText(((Entity)type).getName());
 
-			if (!RenderManager.isGood())
+			if (!RenderManager.isReady())
 				return this;
 
 			if (type.getIconImage() == null)

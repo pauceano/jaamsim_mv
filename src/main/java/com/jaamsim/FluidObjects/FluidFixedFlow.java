@@ -18,7 +18,7 @@
 package com.jaamsim.FluidObjects;
 
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.PolylineModel;
+import com.jaamsim.render.PolylineModel;
 import com.jaamsim.Graphics.FillEntity;
 import com.jaamsim.Graphics.LineEntity;
 import com.jaamsim.Graphics.PolylineEntity;

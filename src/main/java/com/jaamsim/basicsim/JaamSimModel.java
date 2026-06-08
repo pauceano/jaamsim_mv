@@ -52,7 +52,7 @@ import com.jaamsim.input.KeywordIndex;
 import com.jaamsim.input.ParentEntityInput;
 import com.jaamsim.input.ParseContext;
 import com.jaamsim.rng.MRG1999a;
-import com.jaamsim.ui.EventViewer;
+
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.TimeUnit;
 import com.jaamsim.units.Unit;
@@ -483,11 +483,11 @@ public class JaamSimModel implements EventTimeListener {
 			}
 			else if (getSimulation().verifyEvents()) {
 				String evtName = configFile.getParentFile() + File.separator + getRunName() + ".evt";
-				EventTracer trc = new EventTracer(evtName);
+				EventTracer trc = new EventTracer(evtName, gui);
 				eventManager.setTraceListener(trc);
 			}
-			else if (getSimulation().isEventViewerVisible() && gui != null) {
-				eventManager.setTraceListener(EventViewer.getInstance());
+			else if (gui != null) {
+				gui.registerTraceListener(eventManager);
 			}
 		}
 		catch (Exception e) {

@@ -26,7 +26,7 @@ import com.jaamsim.input.InputAgent;
 import com.jaamsim.input.InputCallback;
 import com.jaamsim.input.Keyword;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 import com.jaamsim.units.DistanceUnit;
 
 public class EntityLabel extends TextBasics {

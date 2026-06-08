@@ -23,8 +23,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.jaamsim.Commands.DefineCommand;
-import com.jaamsim.DisplayModels.ColladaModel;
-import com.jaamsim.DisplayModels.ImageModel;
+import com.jaamsim.render.ColladaModel;
+import com.jaamsim.render.ImageModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.Graphics.Image;
 import com.jaamsim.basicsim.Entity;
@@ -153,7 +153,7 @@ public class DisplayEntityFactory extends Entity {
 	 */
 	private static void createImages(File[] files) {
 
-		if (!RenderManager.isGood()) {
+		if (!RenderManager.isReady()) {
 			GUIFrame.invokeErrorDialog("Runtime Error",	"The renderer is not ready.");
 			return;
 		}
@@ -216,7 +216,7 @@ public class DisplayEntityFactory extends Entity {
 	 */
 	private static void create3DAssets(File[] files) {
 
-		if (!RenderManager.isGood()) {
+		if (!RenderManager.isReady()) {
 			GUIFrame.invokeErrorDialog("Runtime Error",	"The renderer is not ready.");
 			return;
 		}

@@ -1,6 +1,6 @@
 /*
  * JaamSim Discrete Event Simulation
- * Copyright (C) 2018 JaamSim Software Inc.
+ * Copyright (C) 2025 JaamSim Software Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.basicsim;
 
-/**
- * Provides a separate class for the ImageModels used for object icons. It allows the ImageModels
- * for icons to be separated from those for images imported by the user.
- * @author Harry King
- *
- */
-public class IconModel extends ImageModel {}
+public final class SoftwareInfo {
+
+	/** The licensed name for the simulation software. */
+	public static final String NAME = "JaamSim";
+
+	/** The release number for the simulation software. */
+	public static final String VERSION = "2026-04";
+
+	private SoftwareInfo() {}
+}

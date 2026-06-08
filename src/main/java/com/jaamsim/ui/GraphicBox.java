@@ -49,9 +49,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.jaamsim.Commands.DefineCommand;
 import com.jaamsim.Commands.KeywordCommand;
-import com.jaamsim.DisplayModels.ColladaModel;
-import com.jaamsim.DisplayModels.DisplayModel;
-import com.jaamsim.DisplayModels.ImageModel;
+import com.jaamsim.render.ColladaModel;
+import com.jaamsim.render.DisplayModel;
+import com.jaamsim.render.ImageModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.basicsim.JaamSimModel;
 import com.jaamsim.controllers.RenderManager;
@@ -123,7 +123,7 @@ public class GraphicBox extends JDialog {
 				if (dm == null)
 					return;
 
-				if (!RenderManager.isGood()) { return; }
+				if (!RenderManager.isReady()) { return; }
 
 				Future<BufferedImage> fi = RenderManager.inst().getPreviewForDisplayModel(dm, null);
 				fi.blockUntilDone();
@@ -149,7 +149,7 @@ public class GraphicBox extends JDialog {
 			@Override
 			public void actionPerformed( ActionEvent e ) {
 
-				if (!RenderManager.isGood()) {
+				if (!RenderManager.isReady()) {
 					return;
 				}
 
@@ -243,7 +243,7 @@ public class GraphicBox extends JDialog {
 				KeywordIndex dmKw = KeywordIndex.formatArgs("DisplayModel", dmName);
 				kwList.add(dmKw);
 
-				if (!RenderManager.isGood()) {
+				if (!RenderManager.isReady()) {
 					((GraphicBox)((JButton)e.getSource()).getTopLevelAncestor()).close();
 					return;
 				}

@@ -22,7 +22,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.jaamsim.DisplayModels.ColladaModel;
+import com.jaamsim.render.ColladaModel;
 import com.jaamsim.basicsim.Entity;
 
 public class ExportColladaModelHandler implements ContextMenuItem {

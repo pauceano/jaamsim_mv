@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +39,7 @@ import com.jaamsim.math.MathUtils;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.LineProxy;
-import com.jaamsim.render.PointProxy;
-import com.jaamsim.render.PolygonProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 import com.jaamsim.units.DistanceUnit;
 
 public class PolylineModel extends AbstractShapeModel implements PolylineEntity {
@@ -634,3 +628,4 @@ public class PolylineModel extends AbstractShapeModel implements PolylineEntity 
 	}
 
 }
+

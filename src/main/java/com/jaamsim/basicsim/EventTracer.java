@@ -28,15 +28,16 @@ import com.jaamsim.events.EventManager;
 import com.jaamsim.events.EventTraceListener;
 import com.jaamsim.events.ProcessTarget;
 import com.jaamsim.input.InputErrorException;
-import com.jaamsim.ui.GUIFrame;
 
 class EventTracer implements EventTraceListener {
+	private final GUIListener gui;
 	private BufferedReader eventVerifyReader;
 	private EventTraceRecord reader;
 	private long bufferTime; // Internal sim time buffer has been filled to
 	private final ArrayList<EventTraceRecord> eventBuffer;
 
-	public EventTracer(String evtName) {
+	public EventTracer(String evtName, GUIListener gui) {
+		this.gui = gui;
 		eventBuffer = new ArrayList<>();
 		bufferTime = 0;
 		File evtFile = new File(evtName);
@@ -118,9 +119,9 @@ class EventTracer implements EventTraceListener {
 					Log.logLine(msg);
 					EventManager.current().pause();
 
-					if (GUIFrame.getInstance() != null) {
-						GUIFrame.getRunManager().pause();
-						GUIFrame.invokeErrorDialog("Event Verification Error",
+					if (gui != null) {
+						gui.pauseSimulation();
+						gui.invokeErrorDialogBox("Event Verification Error",
 								"Present event does not match the next event at this time in the "
 								+ "trace file.",
 								msg, "This message is repeated in the Log Viewer.");
@@ -152,9 +153,9 @@ class EventTracer implements EventTraceListener {
 		Log.logLine(msg);
 		EventManager.current().pause();
 
-		if (GUIFrame.getInstance() != null) {
-			GUIFrame.getRunManager().pause();
-			GUIFrame.invokeErrorDialog("Event Verification Error",
+		if (gui != null) {
+			gui.pauseSimulation();
+			gui.invokeErrorDialogBox("Event Verification Error",
 					"Present event has no matching event at this time in the trace file.",
 					msg, "This message is repeated in the Log Viewer.");
 		}

@@ -28,6 +28,7 @@ import com.jaamsim.math.Ray;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class Mesh implements Renderable {
 
@@ -55,9 +56,9 @@ public Mesh(MeshProto proto, Transform trans, Vec3d scale,
 	_scale = new Vec3d(scale);
 	_visInfo = visInfo;
 
-	_modelMat = RenderUtils.mergeTransAndScale(_trans, _scale);
+	_modelMat = MathUtils.mergeTransAndScale(_trans, _scale);
 
-	_invModelMat = RenderUtils.getInverseWithScale(_trans, _scale);
+	_invModelMat = MathUtils.getInverseWithScale(_trans, _scale);
 
 	pose = _proto.getPose(actions);
 	_hull = _proto.getHull(pose);

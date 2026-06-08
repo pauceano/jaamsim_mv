@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -37,14 +37,7 @@ import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec2d;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.CachedTexLoader;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.ImageProxy;
-import com.jaamsim.render.OverlayLineProxy;
-import com.jaamsim.render.OverlayTextureProxy;
-import com.jaamsim.render.PolygonProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 
 public class ImageModel extends AbstractShapeModel {
 
@@ -353,7 +346,7 @@ public class ImageModel extends AbstractShapeModel {
 	    sequence = 1)
 	public int[] getPixelSize(double simTime) {
 		int[] ret = new int[2];
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return ret;
 		URI uri = imageFile.getValue();
 		Vec2d imageDims = RenderManager.inst().getImageDims(uri);
@@ -365,3 +358,4 @@ public class ImageModel extends AbstractShapeModel {
 	}
 
 }
+

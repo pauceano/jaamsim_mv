@@ -25,6 +25,7 @@ import com.jaamsim.math.Mat4d;
 import com.jaamsim.math.MathUtils;
 import com.jaamsim.math.Ray;
 import com.jaamsim.math.Vec4d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class DebugLine implements Renderable {
 

@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Vec4d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class LineProxy implements RenderProxy {
 

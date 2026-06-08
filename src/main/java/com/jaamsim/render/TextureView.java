@@ -29,6 +29,8 @@ import com.jaamsim.math.Vec2d;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
 import com.jogamp.opengl.GL2GL3;
+import com.jaamsim.math.MathUtils;
+import com.jaamsim.math.VisibilityInfo;
 
 
 /**
@@ -103,7 +105,7 @@ public class TextureView implements Renderable {
 
 		_texCoords = texCoords;
 
-		Mat4d modelMat = RenderUtils.mergeTransAndScale(_trans, _scale);
+		Mat4d modelMat = MathUtils.mergeTransAndScale(_trans, _scale);
 
 		ArrayList<Vec4d> vs = new ArrayList<>(4);
 		vs.add(new Vec4d( 0.5,  0.5, 0, 1.0d));
@@ -294,7 +296,7 @@ public class TextureView implements Renderable {
 		modelViewMat.mult4(_trans.getMat4dRef());
 		modelViewMat.scaleCols3(_scale);
 
-		Mat4d normalMat = RenderUtils.getInverseWithScale(_trans, _scale);
+		Mat4d normalMat = MathUtils.getInverseWithScale(_trans, _scale);
 		normalMat.transpose4();
 
 		gl.glUseProgram(progHandle);

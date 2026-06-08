@@ -8,13 +8,13 @@ Define ObjectType {
                     IconModel
                   }
 
-GraphModel      JavaClass { com.jaamsim.DisplayModels.GraphModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
-PolylineModel   JavaClass { com.jaamsim.DisplayModels.PolylineModel            } Palette { 'Display Models' }    DragAndDrop { FALSE }
-TextModel       JavaClass { com.jaamsim.DisplayModels.TextModel                } Palette { 'Display Models' }    DragAndDrop { FALSE }
-ImageModel      JavaClass { com.jaamsim.DisplayModels.ImageModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
-ColladaModel    JavaClass { com.jaamsim.DisplayModels.ColladaModel             } Palette { 'Display Models' }    DragAndDrop { FALSE }
-ShapeModel      JavaClass { com.jaamsim.DisplayModels.ShapeModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
-IconModel       JavaClass { com.jaamsim.DisplayModels.IconModel                } Palette { 'Display Models' }    DragAndDrop { FALSE }
+GraphModel      JavaClass { com.jaamsim.render.GraphModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
+PolylineModel   JavaClass { com.jaamsim.render.PolylineModel            } Palette { 'Display Models' }    DragAndDrop { FALSE }
+TextModel       JavaClass { com.jaamsim.render.TextModel                } Palette { 'Display Models' }    DragAndDrop { FALSE }
+ImageModel      JavaClass { com.jaamsim.render.ImageModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
+ColladaModel    JavaClass { com.jaamsim.render.ColladaModel             } Palette { 'Display Models' }    DragAndDrop { FALSE }
+ShapeModel      JavaClass { com.jaamsim.render.ShapeModel               } Palette { 'Display Models' }    DragAndDrop { FALSE }
+IconModel       JavaClass { com.jaamsim.render.IconModel                } Palette { 'Display Models' }    DragAndDrop { FALSE }
 
 Define ShapeModel {
                     Rectangle

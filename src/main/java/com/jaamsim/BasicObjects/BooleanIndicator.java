@@ -18,7 +18,7 @@
 package com.jaamsim.BasicObjects;
 
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.input.ColourInput;

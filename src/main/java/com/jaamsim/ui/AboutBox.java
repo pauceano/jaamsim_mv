@@ -28,13 +28,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import com.jaamsim.basicsim.SoftwareInfo;
+
 /**
  * Class to display information about model objects.
  */
 public class AboutBox extends JDialog {
-
-	public static final String softwareName = "JaamSim";
-	public static final String version = "2026-04";
 
 	public AboutBox() {
 		super((JDialog)null, "About", true);
@@ -58,8 +57,8 @@ public class AboutBox extends JDialog {
 
 		// display the model's name
 		StringBuilder name = new StringBuilder("<html>");
-		name.append(softwareName).append("<br>");
-		name.append("Version: ").append(version).append("</html>");
+		name.append(SoftwareInfo.NAME).append("<br>");
+		name.append("Version: ").append(SoftwareInfo.VERSION).append("</html>");
 		JLabel lab = new JLabel(name.toString());
 		lab.setFont(FrameBox.boldFont);
 		layout.setConstraints( lab, constraints );

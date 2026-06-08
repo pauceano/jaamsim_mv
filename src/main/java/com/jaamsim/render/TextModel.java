@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -45,18 +45,8 @@ import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec2d;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.BillboardStringProxy;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.LineProxy;
-import com.jaamsim.render.OverlayLineProxy;
-import com.jaamsim.render.OverlayPolygonProxy;
-import com.jaamsim.render.OverlayStringProxy;
-import com.jaamsim.render.PolygonProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.StringProxy;
-import com.jaamsim.render.TessFontKey;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.TessFontKey;
+import com.jaamsim.math.VisibilityInfo;
 import com.jaamsim.units.DistanceUnit;
 
 public class TextModel extends AbstractShapeModel implements TextEntity {
@@ -524,7 +514,6 @@ public class TextModel extends AbstractShapeModel implements TextEntity {
 
 		private ArrayList<RenderProxy> cachedProxies = null;
 
-
 		public OverlayBinding(Entity ent, DisplayModel dm) {
 			super(ent, dm);
 			try {
@@ -712,7 +701,6 @@ public class TextModel extends AbstractShapeModel implements TextEntity {
 
 		private ArrayList<RenderProxy> cachedProxies = null;
 
-
 		public BillboardBinding(Entity ent, DisplayModel dm) {
 			super(ent, dm);
 			try {
@@ -788,3 +776,4 @@ public class TextModel extends AbstractShapeModel implements TextEntity {
 	}
 
 }
+

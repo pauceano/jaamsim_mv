@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import com.jaamsim.BasicObjects.DowntimeEntity;
 import com.jaamsim.BooleanProviders.BooleanProvInput;
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.ProcessFlow.StateUserEntity;
 import com.jaamsim.Statistics.TimeBasedFrequency;

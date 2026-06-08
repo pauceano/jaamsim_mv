@@ -43,7 +43,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.jaamsim.DisplayModels.IconModel;
+import com.jaamsim.render.IconModel;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.basicsim.EntityIterator;
 import com.jaamsim.basicsim.ErrorException;

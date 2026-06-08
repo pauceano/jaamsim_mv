@@ -111,8 +111,8 @@ import com.jaamsim.Commands.DefineCommand;
 import com.jaamsim.Commands.DefineViewCommand;
 import com.jaamsim.Commands.DeleteCommand;
 import com.jaamsim.Commands.KeywordCommand;
-import com.jaamsim.DisplayModels.DisplayModel;
-import com.jaamsim.DisplayModels.TextModel;
+import com.jaamsim.render.DisplayModel;
+import com.jaamsim.render.TextModel;
 import com.jaamsim.Graphics.BillboardText;
 import com.jaamsim.Graphics.DirectedEntity;
 import com.jaamsim.Graphics.DisplayEntity;
@@ -138,9 +138,12 @@ import com.jaamsim.basicsim.ObjectType;
 import com.jaamsim.basicsim.RunManager;
 import com.jaamsim.basicsim.Simulation;
 import com.jaamsim.basicsim.WindowDefaults;
+import com.jaamsim.basicsim.SoftwareInfo;
 import com.jaamsim.controllers.RateLimiter;
 import com.jaamsim.controllers.RateLimiter.CallbackRunnable;
+import com.jaamsim.basicsim.DragAndDropable;
 import com.jaamsim.controllers.RenderManager;
+import com.jaamsim.font.FontProvider;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.events.EventManager;
 import com.jaamsim.input.ColourInput;
@@ -492,7 +495,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	}
 
 	public void showWindows() {
-		if (RenderManager.isGood()) {
+		if (RenderManager.isReady()) {
 			// Identity the view window that is active
 			View activeView = RenderManager.getActiveView();
 
@@ -1050,7 +1053,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 					item.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (!RenderManager.isGood()) {
+							if (!RenderManager.isReady()) {
 								if (RenderManager.canInitialize()) {
 									RenderManager.initialize(SAFE_GRAPHICS);
 								} else {
@@ -1071,7 +1074,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 				defineItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (!RenderManager.isGood()) {
+						if (!RenderManager.isReady()) {
 							if (RenderManager.canInitialize()) {
 								RenderManager.initialize(SAFE_GRAPHICS);
 							} else {
@@ -1907,7 +1910,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 			@Override
 			public void actionPerformed( ActionEvent event ) {
 				boolean bCreate = createLinks.isSelected();
-				if (RenderManager.isGood()) {
+				if (RenderManager.isReady()) {
 					if (bCreate) {
 						FrameBox.setSelectedEntity(null, false);
 						if (!showLinks.isSelected())
@@ -2023,7 +2026,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 			@Override
 			public void actionPerformed( ActionEvent event ) {
 				boolean bool = reverseButton.isSelected();
-				if (RenderManager.isGood()) {
+				if (RenderManager.isReady()) {
 					RenderManager.inst().setLinkDirection(!bool);
 					RenderManager.redraw();
 				}
@@ -3102,7 +3105,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 		StringBuilder sb = new StringBuilder();
 		if (overallProgress > 0)
 			sb.append(overallProgress).append("% ");
-		sb.append(sim.getName()).append(" - ").append(AboutBox.softwareName);
+		sb.append(sim.getName()).append(" - ").append(SoftwareInfo.NAME);
 		setTitle(sb.toString());
 
 		// Set process bar
@@ -3844,13 +3847,13 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	}
 
 	public void setShowReferences(boolean bool) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		RenderManager.inst().setShowReferences(bool);
 	}
 
 	public void setShowEntityFlow(boolean bool) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		RenderManager.inst().setShowLinks(bool);
 	}
@@ -3989,7 +3992,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	}
 
 	private void updateViewVisibilities() {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		boolean iconified = isIconified();
 		synchronized (views) {
@@ -4044,14 +4047,14 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 
 	@Override
 	public void createWindow(View v) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		RenderManager.inst().createWindow(v);
 	}
 
 	@Override
 	public void closeWindow(View v) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 		RenderManager.inst().closeWindow(v);
 	}
@@ -4098,7 +4101,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	}
 
 	public boolean isResizable(View v) {
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return false;
 		return RenderManager.inst().isResizable(v);
 	}
@@ -4110,7 +4113,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 			public void run() {
 				FrameBox.allowResizing(bool);
 
-				if (!RenderManager.isGood())
+				if (!RenderManager.isReady())
 					return;
 
 				synchronized (views) {
@@ -4120,6 +4123,52 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void invokeErrorDialogBox(String title, String pre, String message, String post) {
+		GUIFrame.invokeErrorDialog(title, pre, message, post);
+	}
+
+	@Override
+	public void pauseSimulation() {
+		getRunManager().pause();
+	}
+
+	@Override
+	public void exitProgram(int errorCode) {
+		GUIFrame.shutdown(errorCode);
+	}
+
+	@Override
+	public void registerTraceListener(EventManager eventManager) {
+		if (getJaamSimModel().getSimulation().isEventViewerVisible())
+			eventManager.setTraceListener(EventViewer.getInstance());
+	}
+
+	@Override
+	public void setSelectedEntity(Entity ent, boolean bool) {
+		FrameBox.setSelectedEntity(ent, bool);
+	}
+
+	@Override
+	public FontProvider getFontProvider() {
+		return RenderManager.inst();
+	}
+
+	@Override
+	public void redraw() {
+		RenderManager.redraw();
+	}
+
+	@Override
+	public void copyToClipboard(String str) {
+		staticCopyToClipboard(str);
+	}
+
+	@Override
+	public String getStringFromClipboard() {
+		return staticGetStringFromClipboard();
 	}
 
 	// ******************************************************************************************************
@@ -4213,7 +4262,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 				System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
 		Log.format("Java: %s (version: %s)",
 				System.getProperty("java.vendor"), System.getProperty("java.version"));
-		Log.format("Software: %s (version: %s)%n", AboutBox.softwareName, AboutBox.version);
+		Log.format("Software: %s (version: %s)%n", SoftwareInfo.NAME, SoftwareInfo.VERSION);
 		Log.format("EventManager Implementation: %s%n", EventManager.getImplementation());
 
 		// Create a graphic simulation
@@ -4366,7 +4415,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	public static void shutdown(int errorCode) {
 
 		shuttingDown.set(true);
-		if (RenderManager.isGood()) {
+		if (RenderManager.isReady()) {
 			RenderManager.inst().shutdown();
 		}
 
@@ -4829,12 +4878,12 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 		copyToClipboard(ent.getName());
 	}
 
-	public static void copyToClipboard(String str) {
+	private static void staticCopyToClipboard(String str) {
 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clpbrd.setContents(new StringSelection(str), null);
 	}
 
-	public static String getStringFromClipboard() {
+	private static String staticGetStringFromClipboard() {
 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		try {
 			return (String)clpbrd.getData(DataFlavor.stringFlavor);
@@ -4845,7 +4894,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 	}
 
 	public Entity getEntityFromClipboard() {
-		String name = getStringFromClipboard();
+		String name = staticGetStringFromClipboard();
 		if (name == null)
 			return null;
 		return getJaamSimModel().getNamedEntity(name);
@@ -4908,7 +4957,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 			// If an entity is not selected, paste the new entity at the point of interest
 			if (selectedEntity == null || !(selectedEntity instanceof DisplayEntity)
 					|| selectedEntity instanceof Region) {
-				if (RenderManager.isGood())
+				if (RenderManager.isReady())
 					RenderManager.inst().dragEntityToMousePosition(dEnt);
 			}
 

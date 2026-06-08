@@ -27,9 +27,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import com.jaamsim.DisplayModels.ColladaModel;
-import com.jaamsim.DisplayModels.DisplayModel;
-import com.jaamsim.DisplayModels.ImageModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.Graphics.View;
 import com.jaamsim.basicsim.JaamSimModel;
@@ -144,3 +141,4 @@ public class PreviewCache {
 		}
 	}
 }
+

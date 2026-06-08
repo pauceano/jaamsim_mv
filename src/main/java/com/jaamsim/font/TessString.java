@@ -31,7 +31,7 @@ import com.jaamsim.render.RenderUtils;
 import com.jaamsim.render.Renderable;
 import com.jaamsim.render.Renderer;
 import com.jaamsim.render.Shader;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 import com.jogamp.opengl.GL2GL3;
 
 public class TessString implements Renderable {

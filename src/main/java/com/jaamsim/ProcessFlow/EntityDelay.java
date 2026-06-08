@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.PolylineModel;
+import com.jaamsim.render.PolylineModel;
 import com.jaamsim.Graphics.DisplayEntity;
 import com.jaamsim.Graphics.LineEntity;
 import com.jaamsim.Graphics.PolylineInfo;

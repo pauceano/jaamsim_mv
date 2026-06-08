@@ -16,7 +16,8 @@
  */
 package com.jaamsim.Graphics;
 
-import com.jaamsim.ui.GUIFrame;
+import com.jaamsim.basicsim.Entity;
+import com.jaamsim.basicsim.GUIListener;
 import com.jogamp.newt.event.KeyEvent;
 
 public class EditableTextDelegate implements EditableText {
@@ -26,6 +27,7 @@ public class EditableTextDelegate implements EditableText {
 	private String initText;      // text before any editing is performed
 	private int insertPos;        // position in the string where new text will be inserted
 	private int numSelected;      // number of characters selected (positive to the right of the insertion position)
+	private Entity owner;
 
 	public EditableTextDelegate() {
 		setText("");
@@ -319,18 +321,34 @@ public class EditableTextDelegate implements EditableText {
 		return Math.min(end + 1 + linePos, getLineEnd(end + 1));
 	}
 
+	public void setOwner(Entity ent) {
+		this.owner = ent;
+	}
+
+	private GUIListener getGUIListener() {
+		if (owner == null)
+			return null;
+		return owner.getJaamSimModel().getGUIListener();
+	}
+
 	@Override
 	public void copyToClipboard() {
+		GUIListener gui = getGUIListener();
+		if (gui == null)
+			return;
 		int start = Math.min(insertPos, insertPos + numSelected);
 		int end = Math.max(insertPos, insertPos + numSelected);
 		StringBuilder sb = new StringBuilder(text);
 		String copiedText = sb.substring(start, end);
-		GUIFrame.copyToClipboard(copiedText);
+		gui.copyToClipboard(copiedText);
 	}
 
 	@Override
 	public void pasteFromClipboard() {
-		String newText = GUIFrame.getStringFromClipboard();
+		GUIListener gui = getGUIListener();
+		if (gui == null)
+			return;
+		String newText = gui.getStringFromClipboard();
 		if (newText == null)
 			return;
 		StringBuilder sb = new StringBuilder(text);

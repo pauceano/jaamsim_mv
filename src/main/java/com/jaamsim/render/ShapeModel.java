@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,12 +36,7 @@ import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.LineProxy;
-import com.jaamsim.render.PolygonProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 
 public class ShapeModel extends AbstractShapeModel {
 
@@ -434,3 +429,4 @@ public class ShapeModel extends AbstractShapeModel {
 	private static final HashMap<String, Tag> emptyTagSet = new HashMap<>(0);
 	private static final Tag tag_contents_def = new Tag(new Color4d[]{ColourInput.BLUE}, new double[]{0.5d}, true);
 }
+

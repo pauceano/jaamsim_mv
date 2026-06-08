@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
 import com.jaamsim.Commands.KeywordCommand;
-import com.jaamsim.DisplayModels.TextModel;
+import com.jaamsim.render.TextModel;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.StringProviders.StringProvInput;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.basicsim.GUIListener;
-import com.jaamsim.controllers.RenderManager;
+import com.jaamsim.font.FontProvider;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.input.EntityInput;
@@ -43,7 +43,7 @@ import com.jaamsim.input.UnitTypeInput;
 import com.jaamsim.input.Vec3dInput;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.render.TessFontKey;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.Unit;
 import com.jogamp.newt.event.KeyEvent;
@@ -184,6 +184,7 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 
 	public OverlayText() {
 		editableText = new EditableTextDelegate();
+		editableText.setOwner(this);
 	}
 
 	static final InputCallback formattextCallback = new InputCallback() {
@@ -315,7 +316,9 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 		// If F2 is pressed, set edit mode
 		if (keyCode == KeyEvent.VK_F2) {
 			setEditMode(true);
-			RenderManager.redraw();
+			GUIListener gui = getJaamSimModel().getGUIListener();
+			if (gui != null)
+				gui.redraw();
 			return true;
 		}
 
@@ -333,7 +336,9 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 		else if (result == CANCEL_EDITS) {
 			cancelEdits();
 		}
-		RenderManager.redraw();
+		GUIListener gui = getJaamSimModel().getGUIListener();
+		if (gui != null)
+			gui.redraw();
 		return true;
 	}
 
@@ -382,6 +387,11 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 		return true;
 	}
 
+	private FontProvider getFontProvider() {
+		GUIListener gui = getJaamSimModel().getGUIListener();
+		return gui != null ? gui.getFontProvider() : null;
+	}
+
 	/**
 	 * Returns the insert position in the present text that corresponds to the specified global
 	 * coordinate. Index 0 is located immediately before the first character in the text.
@@ -392,11 +402,14 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 	public int getStringPosition(int x, int y, int windowWidth, int windowHeight) {
 		double height = getTextHeight(0.0d);
 		TessFontKey fontKey = getTessFontKey();
-		Vec3d size = RenderManager.inst().getRenderedStringSize(fontKey, height, getText());
+		FontProvider fp = getFontProvider();
+		if (fp == null)
+			return -1;
+		Vec3d size = fp.getRenderedStringSize(fontKey, height, getText());
 		IntegerVector pos = getScreenPosition();
 		double startX = getAlignRight() ? windowWidth - pos.get(0) - size.x : pos.get(0);
 		double startY = getAlignBottom() ? windowHeight - pos.get(1) - size.y : pos.get(1);
-		return RenderManager.inst().getRenderedStringPosition(fontKey, height, getText(), x - startX, -y + startY);
+		return fp.getRenderedStringPosition(fontKey, height, getText(), x - startX, -y + startY);
 	}
 
 	public String getRenderText(double simTime) {

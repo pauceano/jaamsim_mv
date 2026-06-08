@@ -17,11 +17,15 @@
 package com.jaamsim.basicsim;
 
 import com.jaamsim.Graphics.View;
+import com.jaamsim.events.EventManager;
+import com.jaamsim.font.FontProvider;
 
 public interface GUIListener {
 
 	public void handleInputError(Throwable t, Entity ent);
 	public void invokeErrorDialogBox(String title, String msg);
+	public void invokeErrorDialogBox(String title, String pre, String message, String post);
+	public void pauseSimulation();
 	public void updateObjectSelector(Entity ent);
 	public void updateModelBuilder();
 	public void updateInputEditor(Entity ent);
@@ -33,7 +37,14 @@ public interface GUIListener {
 	public void createWindow(View v);
 	public void closeWindow(View v);
 	public void allowResizing(boolean bool);
+	public void exitProgram(int errorCode);
 	public void gui_tickUpdate(long tick);
 	public void gui_timeRunning();
 	public void gui_handleError(JaamSimModel sm, Throwable t);
+	public void registerTraceListener(EventManager eventManager);
+	public void setSelectedEntity(Entity ent, boolean bool);
+	public FontProvider getFontProvider();
+	public void redraw();
+	public void copyToClipboard(String str);
+	public String getStringFromClipboard();
 }

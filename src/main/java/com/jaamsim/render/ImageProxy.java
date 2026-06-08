@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec2d;
 import com.jaamsim.math.Vec3d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class ImageProxy implements RenderProxy {
 

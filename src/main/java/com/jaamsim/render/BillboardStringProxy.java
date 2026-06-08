@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import com.jaamsim.font.BillboardString;
 import com.jaamsim.font.TessFont;
 import com.jaamsim.math.Color4d;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.math.Vec3d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class BillboardStringProxy implements RenderProxy {
 

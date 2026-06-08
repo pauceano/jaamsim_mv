@@ -41,7 +41,7 @@ import com.jaamsim.input.RunNumberInput;
 import com.jaamsim.input.UnitTypeListInput;
 import com.jaamsim.input.ValueInput;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.ui.AboutBox;
+import com.jaamsim.basicsim.SoftwareInfo;
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.DistanceUnit;
 import com.jaamsim.units.TimeUnit;
@@ -848,7 +848,7 @@ public class Simulation extends Entity {
 	static final InputCallback lockWindowsCallback = new InputCallback() {
 		@Override
 		public void callback(Entity ent, Input<?> inp) {
-			boolean bool = (boolean) inp.getValue();
+			boolean bool = (Boolean) inp.getValue();
 			GUIListener gui = ent.getJaamSimModel().getGUIListener();
 			if (gui != null)
 				gui.allowResizing(!bool);
@@ -1353,7 +1353,7 @@ public class Simulation extends Entity {
 	  reportable = true,
 	    sequence = 0)
 	public String getSoftwareName(double simTime) {
-		return AboutBox.softwareName;
+		return SoftwareInfo.NAME;
 	}
 
 	@Output(name = "SoftwareVersion",
@@ -1361,7 +1361,7 @@ public class Simulation extends Entity {
 	  reportable = true,
 	    sequence = 1)
 	public String getSoftwareVersion(double simTime) {
-		return AboutBox.version;
+		return SoftwareInfo.VERSION;
 	}
 
 	@Output(name = "ConfigurationFile",

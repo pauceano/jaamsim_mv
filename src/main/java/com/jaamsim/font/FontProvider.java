@@ -1,6 +1,6 @@
 /*
  * JaamSim Discrete Event Simulation
- * Copyright (C) 2012 Ausenco Engineering Canada Inc.
+ * Copyright (C) 2026 JaamSim Software Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.render;
+package com.jaamsim.font;
 
-public class RenderException extends RuntimeException {
+import com.jaamsim.math.TessFontKey;
+import com.jaamsim.math.Vec3d;
 
-	private static final long serialVersionUID = 1L;
+public interface FontProvider {
 
-	public RenderException(String message) {
-		super(message);
-	}
-
-	public RenderException(String message, Throwable cause) {
-		super(message, cause);
-	}
+	public Vec3d getRenderedStringSize(TessFontKey fontKey, double textHeight, String string);
+	public int getRenderedStringPosition(TessFontKey fontKey, double textHeight, String string, double x, double y);
+	public boolean isGood();
 
 }

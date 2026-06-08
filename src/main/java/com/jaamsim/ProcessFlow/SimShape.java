@@ -18,7 +18,7 @@ package com.jaamsim.ProcessFlow;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 import com.jaamsim.Graphics.FillEntity;
 import com.jaamsim.Graphics.LineEntity;
 import com.jaamsim.Samples.SampleInput;

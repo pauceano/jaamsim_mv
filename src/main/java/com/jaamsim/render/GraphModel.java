@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +35,7 @@ import com.jaamsim.math.MathUtils;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.LineProxy;
-import com.jaamsim.render.PolygonProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.StringProxy;
-import com.jaamsim.render.TessFontKey;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.Unit;
 
@@ -775,3 +769,4 @@ public class GraphModel extends DisplayModel {
 
 	}
 }
+

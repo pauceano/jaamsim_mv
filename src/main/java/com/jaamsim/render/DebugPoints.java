@@ -24,6 +24,7 @@ import com.jaamsim.math.AABB;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Ray;
 import com.jaamsim.math.Vec4d;
+import com.jaamsim.math.VisibilityInfo;
 
 public class DebugPoints implements Renderable {
 

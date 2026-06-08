@@ -18,7 +18,7 @@
 package com.jaamsim.Graphics;
 
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.PolylineModel;
+import com.jaamsim.render.PolylineModel;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.input.Keyword;

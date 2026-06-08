@@ -71,7 +71,7 @@ public class OutputBox extends FrameBox {
 				String str = table.getSelectedString();
 				if (str == null)
 					return;
-				GUIFrame.copyToClipboard(str);
+				GUIFrame.getInstance().copyToClipboard(str);
 			}
 		});
 
@@ -131,7 +131,7 @@ public class OutputBox extends FrameBox {
 			copyMenuItem.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed( ActionEvent event ) {
-					GUIFrame.copyToClipboard(str);
+GUIFrame.getInstance().copyToClipboard(str);
 				}
 			} );
 			menu.add(copyMenuItem);

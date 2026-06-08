@@ -17,8 +17,8 @@
  */
 package com.jaamsim.Graphics;
 
-import com.jaamsim.DisplayModels.IconModel;
-import com.jaamsim.DisplayModels.ImageModel;
+import com.jaamsim.render.IconModel;
+import com.jaamsim.render.ImageModel;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.IntegerListInput;
 import com.jaamsim.input.Keyword;

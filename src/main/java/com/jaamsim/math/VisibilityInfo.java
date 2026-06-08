@@ -14,12 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.render;
+package com.jaamsim.math;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.jaamsim.Graphics.View;
 
 public class VisibilityInfo {
 	private static final int[] ALL_VIEWS = new int[0];
@@ -28,14 +25,12 @@ public class VisibilityInfo {
 	private final double minDist;
 	private final double maxDist;
 
-	public VisibilityInfo(ArrayList<View> views, double minDist, double maxDist) {
-		if (views == null || views.size() == 0) {
-			viewIDs = ALL_VIEWS;
+	public VisibilityInfo(int[] viewIDs, double minDist, double maxDist) {
+		if (viewIDs == null) {
+			this.viewIDs = ALL_VIEWS;
 		}
 		else {
-			viewIDs = new int[views.size()];
-			for (int i = 0; i < views.size(); i++)
-				viewIDs[i] = views.get(i).getID();
+			this.viewIDs = viewIDs;
 		}
 
 		this.minDist = minDist;

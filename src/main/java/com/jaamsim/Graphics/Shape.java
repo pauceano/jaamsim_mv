@@ -16,7 +16,7 @@
  */
 package com.jaamsim.Graphics;
 
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 
 /**
  * Two dimension geometric objects such a rectangles, circles, etc.

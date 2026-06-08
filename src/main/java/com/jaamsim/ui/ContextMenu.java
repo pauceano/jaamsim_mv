@@ -245,7 +245,7 @@ public class ContextMenu {
 	public static void populateDisplayEntityMenu(JPopupMenu menu, final DisplayEntity ent, final int nodeIndex,
 			final Component c, final int x, final int y) {
 
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 
 		// 1) Change Graphics
@@ -577,7 +577,7 @@ public class ContextMenu {
 	public static void populateSubModelMenu(JPopupMenu menu, final SubModel submodel, final int nodeIndex,
 			final Component c, final int x, final int y) {
 
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 
 		// Select Components
@@ -614,7 +614,7 @@ public class ContextMenu {
 	public static void populateCompoundEntityMenu(JPopupMenu menu, final CompoundEntity ent, final int nodeIndex,
 			final Component c, final int x, final int y) {
 
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 
 		// Show Components

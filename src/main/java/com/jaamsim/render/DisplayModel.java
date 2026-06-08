@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.util.ArrayList;
 
@@ -31,8 +31,7 @@ import com.jaamsim.input.Output;
 import com.jaamsim.input.ValueListInput;
 import com.jaamsim.input.Vec3dInput;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 import com.jaamsim.units.DistanceUnit;
 
 public abstract class DisplayModel extends Entity {
@@ -102,7 +101,17 @@ public abstract class DisplayModel extends Entity {
 		if (minDist == 0.0) {
 			minDist = Double.NEGATIVE_INFINITY;
 		}
-		visInfo = new VisibilityInfo(visibleViews.getValue(), minDist, maxDist);
+		ArrayList<View> views = visibleViews.getValue();
+		int[] viewIDs;
+		if (views == null || views.isEmpty()) {
+			viewIDs = null;
+		}
+		else {
+			viewIDs = new int[views.size()];
+			for (int i = 0; i < views.size(); i++)
+				viewIDs[i] = views.get(i).getID();
+		}
+		visInfo = new VisibilityInfo(viewIDs, minDist, maxDist);
 	}
 
 	public VisibilityInfo getVisibilityInfo() {
@@ -131,3 +140,4 @@ public abstract class DisplayModel extends Entity {
 		return getUserList();
 	}
 }
+

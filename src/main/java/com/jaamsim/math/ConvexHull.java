@@ -23,8 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.jaamsim.MeshFiles.DataBlock;
-import com.jaamsim.render.RenderException;
-import com.jaamsim.render.RenderUtils;
+import com.jaamsim.basicsim.RenderException;
 
 /**
  * A convex hull that is initialized by a set of points
@@ -444,8 +443,8 @@ public class ConvexHull {
 	public double collisionDistance(Ray r, Transform trans, Vec3d scale) {
 
 		return collisionDistanceByMatrix(r,
-				RenderUtils.mergeTransAndScale(trans, scale),
-				RenderUtils.getInverseWithScale(trans, scale));
+MathUtils.mergeTransAndScale(trans, scale),
+MathUtils.getInverseWithScale(trans, scale));
 	}
 
 	public double collisionDistanceByMatrix(Ray r, Mat4d mat, Mat4d invMat) {

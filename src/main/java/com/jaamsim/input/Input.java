@@ -52,7 +52,7 @@ import com.jaamsim.datatypes.DoubleVector;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.MathUtils;
-import com.jaamsim.ui.NaturalOrderComparator;
+import com.jaamsim.math.NaturalOrderComparator;
 import com.jaamsim.units.DimensionlessUnit;
 import com.jaamsim.units.TimeUnit;
 import com.jaamsim.units.Unit;

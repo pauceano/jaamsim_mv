@@ -25,6 +25,7 @@ import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Ray;
 import com.jaamsim.math.Vec2d;
 import com.jogamp.opengl.GL2GL3;
+import com.jaamsim.math.VisibilityInfo;
 
 public class OverlayPolygon implements OverlayRenderable {
 

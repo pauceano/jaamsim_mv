@@ -21,10 +21,10 @@ import java.util.ArrayList;
 
 import com.jaamsim.BooleanProviders.BooleanProvInput;
 import com.jaamsim.ColourProviders.ColourProvInput;
-import com.jaamsim.DisplayModels.TextModel;
+import com.jaamsim.render.TextModel;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.basicsim.GUIListener;
-import com.jaamsim.controllers.RenderManager;
+import com.jaamsim.font.FontProvider;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.input.Input;
 import com.jaamsim.input.InputAgent;
@@ -35,7 +35,7 @@ import com.jaamsim.input.Vec3dInput;
 import com.jaamsim.math.Color4d;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
-import com.jaamsim.render.TessFontKey;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.units.DistanceUnit;
 import com.jogamp.newt.event.KeyEvent;
 
@@ -116,6 +116,7 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 
 	public TextBasics() {
 		editableText = new EditableTextDelegate();
+		editableText.setOwner(this);
 	}
 
 	@Override
@@ -170,7 +171,9 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		// If F2 is pressed, set edit mode
 		if (keyCode == KeyEvent.VK_F2) {
 			setEditMode(true);
-			RenderManager.redraw();
+			GUIListener gui = getJaamSimModel().getGUIListener();
+			if (gui != null)
+				gui.redraw();
 			return true;
 		}
 
@@ -188,7 +191,9 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		else if (result == Editable.CANCEL_EDITS) {
 			cancelEdits();
 		}
-		RenderManager.redraw();
+		GUIListener gui = getJaamSimModel().getGUIListener();
+		if (gui != null)
+			gui.redraw();
 		return true;
 	}
 
@@ -248,6 +253,11 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		return getText();
 	}
 
+	private FontProvider getFontProvider() {
+		GUIListener gui = getJaamSimModel().getGUIListener();
+		return gui != null ? gui.getFontProvider() : null;
+	}
+
 	/**
 	 * Returns the insert position in the present text that corresponds to the specified global
 	 * coordinate. Index 0 is located immediately before the first character in the text.
@@ -258,8 +268,12 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		double height = getTextHeight(0.0d);
 		TessFontKey fontKey = getTessFontKey();
 
+		FontProvider fp = getFontProvider();
+		if (fp == null)
+			return -1;
+
 		// Set up the transformation from global coordinates to the entity's coordinates
-		Vec3d textsize = RenderManager.inst().getRenderedStringSize(fontKey, height, getText());
+		Vec3d textsize = fp.getRenderedStringSize(fontKey, height, getText());
 		Transform trans = getEntityTransForSize(textsize);
 
 		// Calculate the entity's coordinates for the mouse click
@@ -269,13 +283,16 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		// Position the insertion point where the text was clicked
 		double x = entityCoord.x + 0.5d*textsize.x;
 		double y = entityCoord.y - 0.5d*textsize.y;
-		int pos = RenderManager.inst().getRenderedStringPosition(fontKey, height, getText(), x, y);
+		int pos = fp.getRenderedStringPosition(fontKey, height, getText(), x, y);
 		return pos;
 	}
 
 	public Vec3d getTextSize(String fontName, int style, double textHeight) {
 		TessFontKey fontKey = new TessFontKey(fontName, style);
-		return RenderManager.inst().getRenderedStringSize(fontKey, textHeight, getText());
+		FontProvider fp = getFontProvider();
+		if (fp == null)
+			return new Vec3d();
+		return fp.getRenderedStringSize(fontKey, textHeight, getText());
 	}
 
 	public Vec3d getAutoSize(String fontName, int style, double textHeight) {
@@ -289,7 +306,8 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 	}
 
 	public void resizeForText() {
-		if (!RenderManager.isGood())
+		FontProvider fp = getFontProvider();
+		if (fp == null || !fp.isGood())
 			return;
 		Vec3d newSize = getAutoSize(getFontName(), getStyle(), getTextHeight(0.0d));
 		InputAgent.applyVec3d(this, "Size", newSize, DistanceUnit.class);

@@ -50,7 +50,7 @@ import com.jaamsim.Commands.Command;
 import com.jaamsim.Commands.DefineCommand;
 import com.jaamsim.Commands.KeywordCommand;
 import com.jaamsim.Commands.ListCommand;
-import com.jaamsim.DisplayModels.DisplayModel;
+import com.jaamsim.render.DisplayModel;
 import com.jaamsim.GameObjects.GameEntity;
 import com.jaamsim.Graphics.DirectedEntity;
 import com.jaamsim.Graphics.DisplayEntity;
@@ -66,6 +66,7 @@ import com.jaamsim.basicsim.Log;
 import com.jaamsim.basicsim.ObjectType;
 import com.jaamsim.basicsim.Simulation;
 import com.jaamsim.controllers.RateLimiter.CallbackRunnable;
+import com.jaamsim.font.FontProvider;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.input.Input;
@@ -95,12 +96,12 @@ import com.jaamsim.render.PreviewCache;
 import com.jaamsim.render.RenderProxy;
 import com.jaamsim.render.RenderUtils;
 import com.jaamsim.render.Renderer;
-import com.jaamsim.render.TessFontKey;
+import com.jaamsim.math.TessFontKey;
 import com.jaamsim.render.TexCache;
 import com.jaamsim.render.WindowInteractionListener;
 import com.jaamsim.render.util.ExceptionLogger;
 import com.jaamsim.ui.ContextMenu;
-import com.jaamsim.ui.DragAndDropable;
+import com.jaamsim.basicsim.DragAndDropable;
 import com.jaamsim.ui.EntityPallet.TransferableObjectType;
 import com.jaamsim.ui.FrameBox;
 import com.jaamsim.ui.GUIFrame;
@@ -115,7 +116,7 @@ import com.jogamp.newt.event.KeyEvent;
  * @author Matt Chudleigh
  *
  */
-public class RenderManager implements DragSourceListener {
+public class RenderManager implements DragSourceListener, FontProvider {
 	private final static int EXCEPTION_STACK_THRESHOLD = 10; // The number of recoverable exceptions until a stack trace is output
 	private final static int EXCEPTION_PRINT_RATE = 30; // The number of total exceptions until the overall log is printed
 
@@ -252,14 +253,14 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static final void updateTime(long simTick) {
-		if (!RenderManager.isGood())
+		if (!isReady())
 			return;
 
 		RenderManager.inst().simTick = simTick;
 	}
 
 	public static final void redraw() {
-		if (!isGood()) return;
+		if (!isReady()) return;
 
 		GUIFrame.updateUI();
 	}
@@ -298,7 +299,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static final void clear() {
-		if (!isGood()) return;
+		if (!isReady()) return;
 
 		RenderManager.inst().closeAllWindows();
 	}
@@ -328,8 +329,13 @@ public class RenderManager implements DragSourceListener {
 		activeWindowID = windowID;
 	}
 
-	public static boolean isGood() {
+	public static boolean isReady() {
 		return (s_instance != null && !s_instance.finished.get() && !s_instance.fatalError.get());
+	}
+
+	@Override
+	public boolean isGood() {
+		return isReady();
 	}
 
 	/**
@@ -979,7 +985,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static CameraInfo getCameraInfoForView(View view) {
-		if (!isGood()) return null;
+		if (!isReady()) return null;
 
 		RenderManager rman = RenderManager.inst();
 		int winID = rman.getWindowID(view);
@@ -1052,7 +1058,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static void setSelection(Entity ent, boolean canMakeLink) {
-		if (!RenderManager.isGood())
+		if (!isReady())
 			return;
 
 		RenderManager.inst().setSelectEntity(ent, canMakeLink);
@@ -1644,7 +1650,7 @@ public class RenderManager implements DragSourceListener {
 			Vec4d a = new Vec4d(globalPoints.get(splitInd  ).x, globalPoints.get(splitInd  ).y, globalPoints.get(splitInd  ).z, 1.0d);
 			Vec4d b = new Vec4d(globalPoints.get(splitInd+1).x, globalPoints.get(splitInd+1).y, globalPoints.get(splitInd+1).z, 1.0d);
 
-			nearPoint = RenderUtils.rayClosePoint(rayMatrix, a, b);
+			nearPoint = MathUtils.rayClosePoint(rayMatrix, a, b);
 
 			double rayAngle = RenderUtils.angleToRay(rayMatrix, nearPoint);
 
@@ -2025,7 +2031,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static View getActiveView() {
-		if (!isGood())
+		if (!isReady())
 			return null;
 
 		return inst()._getActiveView();
@@ -2066,7 +2072,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static Frame getOpenWindowForView(View view) {
-		if (!isGood()) return null;
+		if (!isReady()) return null;
 
 		RenderManager rman = RenderManager.inst();
 		int winID = rman.getWindowID(view);
@@ -2093,7 +2099,7 @@ public class RenderManager implements DragSourceListener {
 	 * support off screen rendering.
 	 */
 	public static boolean canRenderOffscreen() {
-		if (!isGood()) return false;
+		if (!isReady()) return false;
 
 		RenderManager rman = RenderManager.inst();
 		return rman.renderer.isGL3Supported();
@@ -2513,7 +2519,7 @@ public class RenderManager implements DragSourceListener {
 	}
 
 	public static void setDebugInfo(boolean showDebug) {
-		if (!isGood()) {
+		if (!isReady()) {
 			return;
 		}
 		s_instance.renderer.setDebugInfo(showDebug);

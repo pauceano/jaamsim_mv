@@ -24,6 +24,7 @@ import java.util.HashMap;
 import com.jaamsim.math.Ray;
 import com.jaamsim.math.Vec2d;
 import com.jogamp.opengl.GL2GL3;
+import com.jaamsim.math.VisibilityInfo;
 
 public class OverlayTexture implements OverlayRenderable {
 

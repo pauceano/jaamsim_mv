@@ -31,6 +31,7 @@ import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
 import com.jaamsim.render.Renderer.ShaderHandle;
 import com.jogamp.opengl.GL2GL3;
+import com.jaamsim.math.VisibilityInfo;
 
 /**
  * A Renderable that draws convex (or relatively convex) polygons. Specifically it draw a triangle fan through all the

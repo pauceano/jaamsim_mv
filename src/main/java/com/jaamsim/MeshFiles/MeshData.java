@@ -41,7 +41,7 @@ import com.jaamsim.math.Vec3dInterner;
 import com.jaamsim.math.Vec4d;
 import com.jaamsim.math.Vec4dInterner;
 import com.jaamsim.render.Action;
-import com.jaamsim.render.RenderException;
+import com.jaamsim.basicsim.RenderException;
 import com.jaamsim.render.RenderUtils;
 import com.jaamsim.render.Renderer;
 

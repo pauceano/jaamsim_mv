@@ -17,7 +17,7 @@
  */
 package com.jaamsim.FluidObjects;
 
-import com.jaamsim.DisplayModels.ShapeModel;
+import com.jaamsim.render.ShapeModel;
 import com.jaamsim.Samples.SampleInput;
 import com.jaamsim.basicsim.Entity;
 import com.jaamsim.events.EventManager;

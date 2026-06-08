@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jaamsim.DisplayModels;
+package com.jaamsim.render;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,14 +41,7 @@ import com.jaamsim.math.AABB;
 import com.jaamsim.math.Transform;
 import com.jaamsim.math.Vec3d;
 import com.jaamsim.math.Vec4d;
-import com.jaamsim.render.Action;
-import com.jaamsim.render.DisplayModelBinding;
-import com.jaamsim.render.MeshDataCache;
-import com.jaamsim.render.MeshProtoKey;
-import com.jaamsim.render.MeshProxy;
-import com.jaamsim.render.RenderProxy;
-import com.jaamsim.render.RenderUtils;
-import com.jaamsim.render.VisibilityInfo;
+import com.jaamsim.math.VisibilityInfo;
 
 public class ColladaModel extends DisplayModel {
 
@@ -322,7 +315,7 @@ public class ColladaModel extends DisplayModel {
 	public void validate() {
 		super.validate();
 
-		if (!RenderManager.isGood())
+		if (!RenderManager.isReady())
 			return;
 
 		// Check that any actions listed in the action list exist in the specified collada file
@@ -349,7 +342,7 @@ public class ColladaModel extends DisplayModel {
 	    sequence = 1)
 	public ArrayList<String> getActionsOutput(double simTime) {
 		ArrayList<String> ret = new ArrayList<>();
-		if (!RenderManager.isGood() || colladaFile.getValue() == null)
+		if (!RenderManager.isReady() || colladaFile.getValue() == null)
 			return ret;
 		MeshProtoKey meshKey = getCachedMeshKey(colladaFile.getValue());
 		ArrayList<Action.Description> actionDescs = RenderManager.inst().getMeshActions(meshKey, true);
@@ -363,7 +356,7 @@ public class ColladaModel extends DisplayModel {
 	 description = "Durations of the animations contained in the 3D model.",
 	    sequence = 2)
 	public double[] getDurationsOutput(double simTime) {
-		if (!RenderManager.isGood() || colladaFile.getValue() == null)
+		if (!RenderManager.isReady() || colladaFile.getValue() == null)
 			return new double[0];
 		MeshProtoKey meshKey = getCachedMeshKey(colladaFile.getValue());
 		ArrayList<Action.Description> actionDescs = RenderManager.inst().getMeshActions(meshKey, true);
@@ -395,3 +388,4 @@ public class ColladaModel extends DisplayModel {
 	}
 
 }
+
