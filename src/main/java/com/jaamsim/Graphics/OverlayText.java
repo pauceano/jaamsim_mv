@@ -387,9 +387,14 @@ public class OverlayText extends OverlayEntity implements TextEntity, EditableTe
 		return true;
 	}
 
+	private FontProvider cachedFontProvider;
+
 	private FontProvider getFontProvider() {
+		if (cachedFontProvider != null)
+			return cachedFontProvider;
 		GUIListener gui = getJaamSimModel().getGUIListener();
-		return gui != null ? gui.getFontProvider() : null;
+		cachedFontProvider = gui != null ? gui.getFontProvider() : null;
+		return cachedFontProvider;
 	}
 
 	/**

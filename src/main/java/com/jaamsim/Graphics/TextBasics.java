@@ -253,9 +253,14 @@ public abstract class TextBasics extends AbstractShape implements TextEntity, Ed
 		return getText();
 	}
 
+	private FontProvider cachedFontProvider;
+
 	private FontProvider getFontProvider() {
+		if (cachedFontProvider != null)
+			return cachedFontProvider;
 		GUIListener gui = getJaamSimModel().getGUIListener();
-		return gui != null ? gui.getFontProvider() : null;
+		cachedFontProvider = gui != null ? gui.getFontProvider() : null;
+		return cachedFontProvider;
 	}
 
 	/**

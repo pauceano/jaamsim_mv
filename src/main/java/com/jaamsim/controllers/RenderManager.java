@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -126,6 +127,8 @@ public class RenderManager implements DragSourceListener, FontProvider {
 	static final Plane XY_PLANE = new Plane();
 
 	private int numberOfExceptions = 0;
+
+	private final ConcurrentHashMap<String, Vec3d> stringSizeCache = new ConcurrentHashMap<>();
 
 	private static RenderManager s_instance = null;
 	/**
@@ -1022,7 +1025,13 @@ public class RenderManager implements DragSourceListener, FontProvider {
 	}
 
 	public Vec3d getRenderedStringSize(TessFontKey fontKey, double textHeight, String string) {
-		return renderer.getTessFont(fontKey).getStringSize(textHeight, string);
+		String cacheKey = fontKey.getFontName() + "|" + fontKey.getFontStyle() + "|" + textHeight + "|" + string;
+		Vec3d cached = stringSizeCache.get(cacheKey);
+		if (cached != null)
+			return cached;
+		Vec3d size = renderer.getTessFont(fontKey).getStringSize(textHeight, string);
+		stringSizeCache.put(cacheKey, size);
+		return size;
 	}
 
 	public double getRenderedStringLength(TessFontKey fontKey, double textHeight, String string) {
