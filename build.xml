@@ -26,6 +26,7 @@ limitations under the License.
   <property name="build.dir"     location="build"/>
   <property name="jogl.lib"      location="jar/jogl-all.jar"/>
   <property name="gluegen.lib"   location="jar/gluegen-rt.jar"/>
+  <property name="jeromq.lib"    location="jar/jeromq.jar"/>
   <property name="class.dir"     location="${build.dir}/classes"/>
   <property name="class25.dir"   location="${build.dir}/classes-25"/>
   <property name="jars.dir"      location="${build.dir}/jars"/>
@@ -60,7 +61,7 @@ limitations under the License.
            debuglevel="lines,source"
            deprecation="on"
            includeantruntime="false"
-           classpath="${jogl.lib}:${gluegen.lib}">
+           classpath="${jogl.lib}:${gluegen.lib}:${jeromq.lib}">
       <compilerarg value="-Xlint:-serial"/>
     </javac>
   </target>
@@ -74,7 +75,7 @@ limitations under the License.
            debuglevel="lines,source"
            deprecation="on"
            includeantruntime="false"
-           classpath="${jogl.lib}:${gluegen.lib}:${class.dir}">
+           classpath="${jogl.lib}:${gluegen.lib}:${jeromq.lib}:${class.dir}">
       <compilerarg value="-Xlint:-serial"/>
       <compilerarg value="--enable-preview"/>
     </javac>
@@ -87,7 +88,7 @@ limitations under the License.
         <attribute name="Add-Opens" value="java.desktop/sun.awt"/>
         <attribute name="Enable-Native-Access" value="ALL-UNNAMED"/>
         <attribute name="Multi-Release" value="true"/>
-        <attribute name="Class-Path" value="jogl-all.jar gluegen-rt.jar"/>
+        <attribute name="Class-Path" value="jogl-all.jar gluegen-rt.jar jeromq.jar"/>
       </manifest>
       <fileset dir="${class.dir}"/>
       <fileset dir="${res.dir}"/>
@@ -117,6 +118,7 @@ limitations under the License.
       <zipfileset src="jar/jogl-all-natives-linux-armv6hf.jar"    includes="natives/**/*"/>
       <zipfileset src="jar/jogl-all-natives-macosx-universal.jar" includes="natives/**/*"/>
       <zipfileset src="jar/jogl-all-natives-freebsd-amd64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jeromq.jar"/>
     </jar>
   </target>
   <target name="exe" depends="jar">

@@ -68,6 +68,7 @@ public class JaamSimModel implements EventTimeListener {
 	private IntegerVector scenarioIndexList;
 	private int replicationNumber;
 	private RunListener runListener;  // notifies the SimRun that the run has ended
+	private final ArrayList<RunListener> additionalRunListeners = new ArrayList<>();
 	private GUIListener gui;
 	private final AtomicLong entityCount = new AtomicLong(0);
 
@@ -269,6 +270,10 @@ public class JaamSimModel implements EventTimeListener {
 		return gui;
 	}
 
+	public void addRunListener(RunListener l) {
+		additionalRunListeners.add(l);
+	}
+
 	@Override
 	public void tickUpdate(long tick) {
 		if (gui != null)
@@ -285,6 +290,9 @@ public class JaamSimModel implements EventTimeListener {
 	public void handleError(Throwable t) {
 		this.recordError();
 		runListener.handleRuntimeError(this, t);
+		for (RunListener each : additionalRunListeners) {
+			each.handleRuntimeError(this, t);
+		}
 	}
 
 	public boolean isStarted() {
@@ -642,6 +650,9 @@ public class JaamSimModel implements EventTimeListener {
 		}
 
 		runListener.runEnded();
+		for (RunListener each : additionalRunListeners) {
+			each.runEnded();
+		}
 	}
 
 	/**
