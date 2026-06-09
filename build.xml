@@ -133,7 +133,6 @@ limitations under the License.
       </manifest>
       <fileset dir="${class.dir}">
         <exclude name="com/jaamsim/ui/**"/>
-        <exclude name="com/jaamsim/render/**"/>
         <exclude name="com/jaamsim/controllers/**"/>
         <exclude name="com/jaamsim/font/**"/>
         <exclude name="com/jaamsim/collada/**"/>
