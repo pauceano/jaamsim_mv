@@ -20,6 +20,7 @@ import java.awt.EventQueue;
 
 import com.jaamsim.basicsim.JaamSimModel;
 import com.jaamsim.basicsim.Log;
+import com.jaamsim.basicsim.RunManager;
 import com.jaamsim.controllers.RenderManager;
 import com.jaamsim.ui.GUIFrame;
 
@@ -28,6 +29,8 @@ public class ViewApplication {
 	public static void main(String[] args) {
 		JaamSimModel viewModel = new JaamSimModel("ZMQ-View");
 		viewModel.autoLoad();
+
+		GUIFrame.setRunManager(new RunManager(viewModel));
 
 		Log.logLine("Loading Simulation Environment ... ");
 		GUIFrame gui = GUIFrame.createInstance();
