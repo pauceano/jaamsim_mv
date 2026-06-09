@@ -19,6 +19,7 @@ package com.jaamsim.remote;
 import java.awt.EventQueue;
 
 import com.jaamsim.basicsim.JaamSimModel;
+import com.jaamsim.basicsim.Log;
 import com.jaamsim.controllers.RenderManager;
 import com.jaamsim.ui.GUIFrame;
 
@@ -28,13 +29,18 @@ public class ViewApplication {
 		JaamSimModel viewModel = new JaamSimModel("ZMQ-View");
 		viewModel.autoLoad();
 
+		Log.logLine("Loading Simulation Environment ... ");
+		GUIFrame gui = GUIFrame.createInstance();
 		RenderManager.initialize(false);
+		Log.logLine("Simulation Environment Loaded");
+
+		viewModel.setGUIListener(gui);
 
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				GUIFrame frame = GUIFrame.getInstance();
-				frame.setTitle("JaamSim View (ZMQ)");
+				gui.setTitle("JaamSim View (ZMQ)");
+				gui.setVisible(true);
 			}
 		});
 	}

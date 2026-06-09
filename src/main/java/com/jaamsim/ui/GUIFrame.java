@@ -474,7 +474,7 @@ public class GUIFrame extends OSFixJFrame implements GUIListener {
 		return instance;
 	}
 
-	private static synchronized GUIFrame createInstance() {
+	public static synchronized GUIFrame createInstance() {
 		Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		// a workaround to calls to getPreferredSize from within the GUIFrame constructor
 		winDefs = new WindowDefaults(winSize.width, winSize.height, 100, 0, 0);
