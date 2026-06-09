@@ -68,6 +68,8 @@ import com.jaamsim.basicsim.ObjectType;
 import com.jaamsim.basicsim.Simulation;
 import com.jaamsim.controllers.RateLimiter.CallbackRunnable;
 import com.jaamsim.font.FontProvider;
+import com.jaamsim.remote.EntityShadow;
+import com.jaamsim.remote.EntityStateCache;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.ColourInput;
 import com.jaamsim.input.Input;
@@ -131,12 +133,15 @@ public class RenderManager implements DragSourceListener, FontProvider {
 	private final ConcurrentHashMap<String, Vec3d> stringSizeCache = new ConcurrentHashMap<>();
 
 	private static RenderManager s_instance = null;
+
+	private final EntityStateCache entityCache = new EntityStateCache();
 	/**
 	 * Basic singleton pattern
 	 */
 	public static void initialize(boolean safeGraphics) {
 		Renderer render = new Renderer(safeGraphics);
 		s_instance = new RenderManager(render);
+		s_instance.entityCache.start();
 
 		Thread managerThread = new Thread(new Runnable() {
 			@Override
@@ -537,13 +542,35 @@ public class RenderManager implements DragSourceListener, FontProvider {
 		int numEnts = 0;
 		int numBindings = 0;
 
-		// Collect the render proxies for each entity
+		if (entityCache.size() > 0) {
+			for (EntityShadow shadow : entityCache.getSnapshots()) {
+				if (!shadow.show)
+					continue;
+
+				numEnts++;
+				if (numEnts > maxEnts)
+					break;
+
+				DisplayEntity de = (DisplayEntity) simModel.getNamedEntity(shadow.name);
+				if (de == null)
+					continue;
+				for (DisplayModelBinding binding : de.getDisplayBindings()) {
+					try {
+						numBindings++;
+						binding.collectProxies(simTime, scene);
+					} catch (Throwable t) {
+						logException(t);
+					}
+				}
+			}
+			return numBindings;
+		}
+
 		for (DisplayEntity de : simModel.getClonesOfIterator(DisplayEntity.class)) {
 			if (!de.getShow(simTime))
 				continue;
 
 			numEnts++;
-			// There is an upper limit on number of entities
 			if (numEnts > maxEnts) {
 				break;
 			}
@@ -552,7 +579,6 @@ public class RenderManager implements DragSourceListener, FontProvider {
 					numBindings++;
 					binding.collectProxies(simTime, scene);
 				} catch (Throwable t) {
-					// Log the exception in the exception list
 					logException(t);
 				}
 			}

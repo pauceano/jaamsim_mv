@@ -146,6 +146,7 @@ public class ZmqBridge implements LogListener, RunListener {
 				break;
 			try {
 				publishSnapshot();
+				publishEntityStates();
 			} catch (Exception e) {
 				Log.format("ZmqBridge snapshot error: %s", e.getMessage());
 			}
@@ -184,6 +185,24 @@ public class ZmqBridge implements LogListener, RunListener {
 		JSONValue msg = new JSONValue();
 		msg.mapVal = root;
 		publish("simState", JSONWriter.writeJSONValue(msg));
+	}
+
+	private void publishEntityStates() {
+		if (simModel == null || pubSocket == null)
+			return;
+
+		double simTime = simModel.getSimTime();
+		for (Entity ent : simModel.getClonesOfIterator(Entity.class)) {
+			if (!ent.isActive())
+				continue;
+			HashMap<String, JSONValue> ej = entityToJson(ent, simTime);
+			ej.put("show", JSONValue.makeStringVal(
+				ent instanceof DisplayEntity ?
+				Boolean.toString(((DisplayEntity) ent).getShow(simTime)) : "true"));
+			JSONValue msg = new JSONValue();
+			msg.mapVal = ej;
+			publish("entityState", JSONWriter.writeJSONValue(msg));
+		}
 	}
 
 	private HashMap<String, JSONValue> entityToJson(Entity ent, double simTime) {
