@@ -69,6 +69,7 @@ import com.jaamsim.basicsim.Simulation;
 import com.jaamsim.controllers.RateLimiter.CallbackRunnable;
 import com.jaamsim.font.FontProvider;
 import com.jaamsim.remote.EntityShadow;
+import com.jaamsim.remote.EntityShadowAdapter;
 import com.jaamsim.remote.EntityStateCache;
 import com.jaamsim.datatypes.IntegerVector;
 import com.jaamsim.input.ColourInput;
@@ -551,10 +552,10 @@ public class RenderManager implements DragSourceListener, FontProvider {
 				if (numEnts > maxEnts)
 					break;
 
-				DisplayEntity de = (DisplayEntity) simModel.getNamedEntity(shadow.name);
-				if (de == null)
+				EntityShadowAdapter adapter = entityCache.getAdapter(shadow.name);
+				if (adapter == null)
 					continue;
-				for (DisplayModelBinding binding : de.getDisplayBindings()) {
+				for (DisplayModelBinding binding : adapter.getDisplayBindings()) {
 					try {
 						numBindings++;
 						binding.collectProxies(simTime, scene);

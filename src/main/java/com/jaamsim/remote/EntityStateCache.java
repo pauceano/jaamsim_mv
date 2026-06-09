@@ -28,6 +28,7 @@ import com.jaamsim.basicsim.Log;
 public class EntityStateCache {
 
 	private final ConcurrentHashMap<String, EntityShadow> entities = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, EntityShadowAdapter> adapters = new ConcurrentHashMap<>();
 	private final ZContext context;
 	private final ZMQ.Socket subSocket;
 	private Thread subscriberThread;
@@ -66,6 +67,18 @@ public class EntityStateCache {
 
 	public int size() {
 		return entities.size();
+	}
+
+	public EntityShadowAdapter getAdapter(String name) {
+		EntityShadowAdapter adapter = adapters.get(name);
+		if (adapter != null)
+			return adapter;
+		EntityShadow shadow = entities.get(name);
+		if (shadow == null)
+			return null;
+		adapter = new EntityShadowAdapter(shadow);
+		adapters.put(name, adapter);
+		return adapter;
 	}
 
 	private void subscriberLoop() {
