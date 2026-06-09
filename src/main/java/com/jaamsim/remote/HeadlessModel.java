@@ -41,9 +41,7 @@ public class HeadlessModel {
 		try {
 			simModel.configure(configFile);
 		} catch (Exception e) {
-			System.err.println("Failed to load config: " + e.getMessage());
-			e.printStackTrace();
-			System.exit(1);
+			System.err.println("Configure warnings: " + e.getMessage());
 		}
 
 		ZmqBridge bridge = new ZmqBridge();
