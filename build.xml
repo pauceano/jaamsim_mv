@@ -121,8 +121,69 @@ limitations under the License.
       <zipfileset src="jar/jeromq.jar"/>
     </jar>
   </target>
+
+  <!-- ============================================================== -->
+  <!-- Model-only JAR: simulation engine + ZMQ publisher, no GUI deps  -->
+  <!-- ============================================================== -->
+  <target name="jar-model" depends="compile">
+    <jar jarfile="${jars.dir}/JaamSimModel-${ver}.jar" compress="true">
+      <manifest>
+        <attribute name="Main-Class" value="com.jaamsim.ui.GUIFrame"/>
+        <attribute name="Add-Opens" value="java.desktop/sun.awt"/>
+        <attribute name="Enable-Native-Access" value="ALL-UNNAMED"/>
+        <attribute name="Multi-Release" value="true"/>
+        <attribute name="Class-Path" value="jeromq.jar"/>
+      </manifest>
+      <fileset dir="${class.dir}">
+        <exclude name="com/jaamsim/ui/**"/>
+        <exclude name="com/jaamsim/render/**"/>
+        <exclude name="com/jaamsim/controllers/**"/>
+        <exclude name="com/jaamsim/font/**"/>
+        <exclude name="com/jaamsim/collada/**"/>
+        <exclude name="com/jaamsim/GLTF/**"/>
+        <exclude name="com/jaamsim/MeshFiles/**"/>
+        <exclude name="com/jaamsim/video/**"/>
+      </fileset>
+      <fileset dir="${res.dir}"/>
+      <fileset file="LICENSE"/>
+      <zipfileset src="jar/jeromq.jar"/>
+    </jar>
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- View-only JAR: 3D rendering + ZMQ subscriber + JOGL             -->
+  <!-- ============================================================== -->
+  <target name="jar-view" depends="compile">
+    <jar jarfile="${jars.dir}/JaamSimView-${ver}.jar" compress="true">
+      <manifest>
+        <attribute name="Main-Class" value="com.jaamsim.ui.GUIFrame"/>
+        <attribute name="Add-Opens" value="java.desktop/sun.awt"/>
+        <attribute name="Enable-Native-Access" value="ALL-UNNAMED"/>
+        <attribute name="Multi-Release" value="true"/>
+        <attribute name="Class-Path" value="jogl-all.jar gluegen-rt.jar jeromq.jar"/>
+      </manifest>
+      <fileset dir="${class.dir}"/>
+      <fileset dir="${res.dir}"/>
+      <fileset file="LICENSE"/>
+      <zipfileset src="jar/gluegen-rt.jar"     includes="jogamp/**/*,com/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-windows-amd64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-linux-amd64.jar"      includes="natives/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-linux-aarch64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-linux-armv6hf.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-macosx-universal.jar" includes="natives/**/*"/>
+      <zipfileset src="jar/gluegen-rt-natives-freebsd-amd64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all.jar"       includes="jogamp/**/*,com/**/*,newt/**/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-windows-amd64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-linux-amd64.jar"      includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-linux-aarch64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-linux-armv6hf.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-macosx-universal.jar" includes="natives/**/*"/>
+      <zipfileset src="jar/jogl-all-natives-freebsd-amd64.jar"    includes="natives/**/*"/>
+      <zipfileset src="jar/jeromq.jar"/>
+    </jar>
+  </target>
+
   <target name="exe" depends="jar">
-    <delete file="${jars.dir}/JS64.exe4j" quiet="true"/>
     <copy file="${make.dir}/JS64.exe4j" toFile="${jars.dir}/JS64.exe4j">
       <filterset>
         <filter token="VERSION" value="${ver}"/>
